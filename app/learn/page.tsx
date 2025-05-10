@@ -269,7 +269,7 @@ export default function LearnPage() {
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-4 text-black">Interactive LLM Learning</h1>
-          <p className="text-gray-600">
+          <p className="text-white-600">
             Explore different LLM models and learn about their capabilities and use cases.
           </p>
         </div>
