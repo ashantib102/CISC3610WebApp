@@ -326,7 +326,7 @@ export default function LearnPage() {
 
                 <div className="flex justify-end mb-4">
                   {audioError ? (
-                    <Button variant="outline" disabled className="text-gray-500">
+                    <Button variant="outline" disabled className="text-white-500">
                       <VolumeX className="mr-2 h-4 w-4" />
                       Audio Unavailable
                     </Button>
@@ -346,12 +346,12 @@ export default function LearnPage() {
                     <TabsTrigger value="limitations">Limitations</TabsTrigger>
                   </TabsList>
                   <TabsContent value="overview" className="p-4">
-                    <p className="text-gray-700">{activeModel.description}</p>
+                    <p className="text-white-700">{activeModel.description}</p>
                   </TabsContent>
                   <TabsContent value="features" className="p-4">
                     <ul className="list-disc pl-5 space-y-2">
                       {activeModel.keyFeatures.map((feature, index) => (
-                        <li key={index} className="text-gray-700">
+                        <li key={index} className="text-white-700">
                           {feature}
                         </li>
                       ))}
@@ -360,7 +360,7 @@ export default function LearnPage() {
                   <TabsContent value="usecases" className="p-4">
                     <ul className="list-disc pl-5 space-y-2">
                       {activeModel.useCases.map((useCase, index) => (
-                        <li key={index} className="text-gray-700">
+                        <li key={index} className="text-white-700">
                           {useCase}
                         </li>
                       ))}
@@ -369,7 +369,7 @@ export default function LearnPage() {
                   <TabsContent value="limitations" className="p-4">
                     <ul className="list-disc pl-5 space-y-2">
                       {activeModel.limitations.map((limitation, index) => (
-                        <li key={index} className="text-gray-700">
+                        <li key={index} className="text-white-700">
                           {limitation}
                         </li>
                       ))}
