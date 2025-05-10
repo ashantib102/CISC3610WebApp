@@ -1,8 +1,64 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Laptop, Database } from "lucide-react"
+"use client";
+
+// Extend the Window interface to include the beforeinstallprompt event
+declare global {
+  interface WindowEventMap {
+    beforeinstallprompt: Event & {
+      prompt: () => void;
+      userChoice: Promise<{ outcome: string }>;
+    };
+  }
+}
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Laptop, Database } from "lucide-react";
 
 export default function AboutPage() {
+  const [deferredPrompt, setDeferredPrompt] = useState<
+    | (Event & {
+        prompt: () => void;
+        userChoice: Promise<{ outcome: string }>;
+      })
+    | null
+  >(null);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (
+      e: Event & {
+        prompt: () => void;
+        userChoice: Promise<{ outcome: string }>;
+      }
+    ) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt
+      );
+    };
+  }, []);
+
+  const handleInstallClick = () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === "accepted") {
+          console.log("User accepted the install prompt");
+        } else {
+          console.log("User dismissed the install prompt");
+        }
+        setDeferredPrompt(null);
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       <header className="bg-gradient-to-r from-blue-600 to-indigo-700 py-6">
@@ -10,7 +66,11 @@ export default function AboutPage() {
           <div className="flex justify-between items-center">
             <Link href="/">
               <div className="flex items-center">
-                <img src="/llm-explorer-logo.jpeg" alt="LLM Explorer Logo" className="h-12 w-auto mr-3" />
+                <img
+                  src="/llm-explorer-logo.jpeg"
+                  alt="LLM Explorer Logo"
+                  className="h-12 w-auto mr-3"
+                />
                 <h1 className="text-2xl font-bold text-white">LLM Explorer</h1>
               </div>
             </Link>
@@ -24,7 +84,11 @@ export default function AboutPage() {
               <Link href="/about" className="text-white hover:text-blue-200">
                 About
               </Link>
-              <Link href="/promo" className="text-white hover:text-blue-200">
+              <Link
+                href="#"
+                onClick={handleInstallClick}
+                className="text-white hover:text-blue-200"
+              >
                 Download
               </Link>
             </nav>
@@ -34,22 +98,35 @@ export default function AboutPage() {
 
       <main className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl font-bold mb-8 text-black">About LLM Explorer</h1>
+          <h1 className="text-4xl font-bold mb-8 text-black">
+            About LLM Explorer
+          </h1>
 
           <section className="mb-12">
-            <h2 className="text-2xl font-semibold mb-4 text-black">App Features</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-black">
+              App Features
+            </h2>
             <div className="bg-white rounded-lg shadow-md p-6">
               <p className="mb-4 text-black">
-                LLM Explorer is a Progressive Web App (PWA) designed to educate users about various Large Language
-                Models (LLMs) currently available in the market. Our app provides comprehensive information about
-                popular LLMs such as ChatGPT, Gemini, Claude, v0, Cursor, and Copilot.
+                LLM Explorer is a Progressive Web App (PWA) designed to educate
+                users about various Large Language Models (LLMs) currently
+                available in the market. Our app provides comprehensive
+                information about popular LLMs such as ChatGPT, Gemini, Claude,
+                v0, Cursor, and Copilot.
               </p>
 
-              <h3 className="text-xl font-medium mt-6 mb-3 text-black">Key Features:</h3>
+              <h3 className="text-xl font-medium mt-6 mb-3 text-black">
+                Key Features:
+              </h3>
               <ul className="list-disc pl-5 space-y-2 text-black">
-                <li>Interactive learning interface with Canvas visualizations</li>
+                <li>
+                  Interactive learning interface with Canvas visualizations
+                </li>
                 <li>Audio descriptions of each LLM model</li>
-                <li>Comprehensive information about features, use cases, and limitations</li>
+                <li>
+                  Comprehensive information about features, use cases, and
+                  limitations
+                </li>
                 <li>Responsive design that works on all devices</li>
                 <li>Installable as a PWA for offline use</li>
                 <li>Regular updates as new LLM models are released</li>
@@ -58,58 +135,90 @@ export default function AboutPage() {
           </section>
 
           <section className="mb-12">
-            <h2 className="text-2xl font-semibold mb-4 text-black">Documentation</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-black">
+              Documentation
+            </h2>
             <div className="grid md:grid-cols-2 gap-6">
               <div className="bg-white rounded-lg shadow-md p-6">
                 <div className="flex items-center mb-4">
                   <Laptop className="h-6 w-6 text-blue-600 mr-3" />
-                  <h3 className="text-xl font-medium text-black">Installation Guide</h3>
+                  <h3 className="text-xl font-medium text-black">
+                    Installation Guide
+                  </h3>
                 </div>
                 <p className="mb-4 text-black">
-                  LLM Explorer can be installed on your device as a Progressive Web App for easy access and offline use.
+                  LLM Explorer can be installed on your device as a Progressive
+                  Web App for easy access and offline use.
                 </p>
                 <ol className="list-decimal pl-5 space-y-2 text-black">
                   <li>
-                    Visit the LLM Explorer website at <code className="text-black">llm-explorer.vercel.app</code>
+                    Visit the LLM Explorer website at{" "}
+                    <code className="text-black">llm-explorer.vercel.app</code>
                   </li>
-                  <li>Click the install button in your browser's address bar (or menu)</li>
+                  <li>
+                    Click the install button in your browser's address bar (or
+                    menu)
+                  </li>
                   <li>Follow the prompts to add the app to your home screen</li>
-                  <li>Once installed, you can use the app even without an internet connection</li>
+                  <li>
+                    Once installed, you can use the app even without an internet
+                    connection
+                  </li>
                 </ol>
               </div>
 
               <div className="bg-white rounded-lg shadow-md p-6">
                 <div className="flex items-center mb-4">
                   <Database className="h-6 w-6 text-blue-600 mr-3" />
-                  <h3 className="text-xl font-medium text-black">Data Modification</h3>
+                  <h3 className="text-xl font-medium text-black">
+                    Data Modification
+                  </h3>
                 </div>
                 <p className="mb-4 text-black">
-                  LLM Explorer uses a JSON file to store information about each LLM model. To add or modify data:
+                  LLM Explorer uses a JSON file to store information about each
+                  LLM model. To add or modify data:
                 </p>
                 <ol className="list-decimal pl-5 space-y-2 text-black">
                   <li>
-                    Locate the <code className="text-black">llm-data.json</code> file in the{" "}
-                    <code className="text-black">data</code> directory
+                    Locate the <code className="text-black">llm-data.json</code>{" "}
+                    file in the <code className="text-black">data</code>{" "}
+                    directory
                   </li>
-                  <li>Follow the existing JSON structure to add a new model or update existing information</li>
-                  <li>Ensure all required fields are included (id, name, creator, etc.)</li>
-                  <li>Add appropriate image and audio files to the public directory</li>
-                  <li>Update references in the JSON file to point to new assets</li>
+                  <li>
+                    Follow the existing JSON structure to add a new model or
+                    update existing information
+                  </li>
+                  <li>
+                    Ensure all required fields are included (id, name, creator,
+                    etc.)
+                  </li>
+                  <li>
+                    Add appropriate image and audio files to the public
+                    directory
+                  </li>
+                  <li>
+                    Update references in the JSON file to point to new assets
+                  </li>
                 </ol>
               </div>
             </div>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4 text-black">Technical Information</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-black">
+              Technical Information
+            </h2>
             <div className="bg-white rounded-lg shadow-md p-6">
               <p className="mb-4 text-black">
-                LLM Explorer is built with modern web technologies to provide a seamless experience across all devices:
+                LLM Explorer is built with modern web technologies to provide a
+                seamless experience across all devices:
               </p>
 
               <div className="grid md:grid-cols-2 gap-6 mt-6">
                 <div>
-                  <h3 className="text-lg font-medium mb-3 text-black">Frontend Technologies:</h3>
+                  <h3 className="text-lg font-medium mb-3 text-black">
+                    Frontend Technologies:
+                  </h3>
                   <ul className="list-disc pl-5 space-y-1 text-black">
                     <li>Next.js (React framework)</li>
                     <li>Tailwind CSS</li>
@@ -119,7 +228,9 @@ export default function AboutPage() {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-medium mb-3 text-black">PWA Features:</h3>
+                  <h3 className="text-lg font-medium mb-3 text-black">
+                    PWA Features:
+                  </h3>
                   <ul className="list-disc pl-5 space-y-1 text-black">
                     <li>Service Worker for offline functionality</li>
                     <li>Web App Manifest for installation</li>
@@ -155,7 +266,11 @@ export default function AboutPage() {
               <Link href="/about" className="hover:text-blue-300">
                 About
               </Link>
-              <Link href="/promo" className="hover:text-blue-300">
+              <Link
+                href="#"
+                onClick={handleInstallClick}
+                className="hover:text-blue-300"
+              >
                 Download
               </Link>
             </div>
@@ -163,5 +278,5 @@ export default function AboutPage() {
         </div>
       </footer>
     </div>
-  )
+  );
 }
