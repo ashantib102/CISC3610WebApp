@@ -18,9 +18,11 @@ declare global {
 export default function PWAInit() {
   useEffect(() => {
     if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+      const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+      
       // Register service worker
       navigator.serviceWorker
-        .register('/sw.js')
+        .register(`${basePath}/sw.js`)
         .then(registration => {
           console.log('Service Worker registration successful:', registration.scope);
           

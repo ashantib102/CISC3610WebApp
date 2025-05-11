@@ -6,27 +6,29 @@
 // Define a version for your cache
 const CACHE_NAME = "llm-explorer-v1";
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
 // Resources to cache
 const RESOURCES_TO_CACHE = [
-  "/",
-  "/learn",
-  "/about",
-  "/promo",
-  "/icon-192x192.png",
-  "/icon-512x512.png",
-  "/manifest.webmanifest",
-  "/data/llm-data.json",
-  "/llm-explorer-logo.jpeg",
-  "/chatgpt-logo.png",
-  "/claude-logo.webp",
-  "/gemini-logo.webp",
-  "/v0-logo.svg",
-  "/copilot-logo.jpeg",
-  "/deepseek-logo.webp",
-  "/cursor-logo.png",
-  "/llm-explorer-home.png",
-  "/llm-explorer-mobile-app.png",
-  "/llm-explorer-details.png"
+  `${basePath}/`,
+  `${basePath}/learn`,
+  `${basePath}/about`,
+  `${basePath}/promo`,
+  `${basePath}/icon-192x192.png`,
+  `${basePath}/icon-512x512.png`,
+  `${basePath}/manifest.webmanifest`,
+  `${basePath}/data/llm-data.json`,
+  `${basePath}/llm-explorer-logo.jpeg`,
+  `${basePath}/chatgpt-logo.png`,
+  `${basePath}/claude-logo.webp`,
+  `${basePath}/gemini-logo.webp`,
+  `${basePath}/v0-logo.svg`,
+  `${basePath}/copilot-logo.jpeg`,
+  `${basePath}/deepseek-logo.webp`,
+  `${basePath}/cursor-logo.png`,
+  `${basePath}/llm-explorer-home.png`,
+  `${basePath}/llm-explorer-mobile-app.png`,
+  `${basePath}/llm-explorer-details.png`
 ];
 
 // Define custom types for service worker events

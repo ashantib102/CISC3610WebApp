@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Download, BookOpen } from "lucide-react";
+import { getAssetPath } from "@/lib/assets";
 
 export default function Home() {
   return (
@@ -11,7 +12,7 @@ export default function Home() {
             <Link href="/">
               <div className="flex items-center">
                 <img
-                  src="/llm-explorer-logo.jpeg"
+                  src={getAssetPath("/llm-explorer-logo.jpeg")}
                   alt="LLM Explorer Logo"
                   className="h-12 w-auto mr-3"
                 />

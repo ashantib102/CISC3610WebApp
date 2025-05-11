@@ -19,6 +19,17 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  // Add trailing slashes to help with GitHub Pages routing
+  trailingSlash: true,
+  // Disable image optimization since we're using static export
+  images: {
+    unoptimized: true,
+    domains: ['localhost'],
+  },
+  // Handle GitHub Pages environment
+  env: {
+    NEXT_PUBLIC_BASE_PATH: isDev ? "" : basePath,
+  },
 };
 
 export default nextConfig;
