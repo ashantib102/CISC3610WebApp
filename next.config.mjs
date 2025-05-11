@@ -16,19 +16,19 @@ const nextConfig = {
   output: "export",
   assetPrefix: isDev ? "" : assetPrefix,
   basePath: isDev ? "" : basePath,
-  images: {
-    unoptimized: true,
-  },
   // Add trailing slashes to help with GitHub Pages routing
   trailingSlash: true,
-  // Disable image optimization since we're using static export
+  // Configure images for static export
   images: {
     unoptimized: true,
-    domains: ['localhost'],
+    domains: ["localhost"],
   },
   // Handle GitHub Pages environment
   env: {
     NEXT_PUBLIC_BASE_PATH: isDev ? "" : basePath,
+  },
+  // Disable React StrictMode for PWA
+  reactStrictMode: false,
   },
 };
 

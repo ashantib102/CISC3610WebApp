@@ -6,7 +6,7 @@
 // Define a version for your cache
 const CACHE_NAME = "llm-explorer-v1";
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 // Resources to cache
 const RESOURCES_TO_CACHE = [
@@ -28,7 +28,7 @@ const RESOURCES_TO_CACHE = [
   `${basePath}/cursor-logo.png`,
   `${basePath}/llm-explorer-home.png`,
   `${basePath}/llm-explorer-mobile-app.png`,
-  `${basePath}/llm-explorer-details.png`
+  `${basePath}/llm-explorer-details.png`,
 ];
 
 // Define custom types for service worker events

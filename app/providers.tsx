@@ -1,14 +1,9 @@
 "use client";
 
 import { ThemeProvider } from "@/components/theme-provider";
-import { useEffect } from "react";
-import { registerSW } from "./pwa";
+import PWAInit from "@/components/pwa-init";
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  useEffect(() => {
-    registerSW();
-  }, []);
-
   return (
     <ThemeProvider
       attribute="class"

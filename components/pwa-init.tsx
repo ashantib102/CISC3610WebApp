@@ -17,33 +17,36 @@ declare global {
 
 export default function PWAInit() {
   useEffect(() => {
-    if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
-      const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
-      
+    if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+      const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
       // Register service worker
       navigator.serviceWorker
         .register(`${basePath}/sw.js`)
-        .then(registration => {
-          console.log('Service Worker registration successful:', registration.scope);
-          
+        .then((registration) => {
+          console.log(
+            "Service Worker registration successful:",
+            registration.scope
+          );
+
           // Listen for the beforeinstallprompt event
-          window.addEventListener('beforeinstallprompt', (e) => {
+          window.addEventListener("beforeinstallprompt", (e) => {
             // Prevent Chrome 76+ from automatically showing the prompt
             e.preventDefault();
             // Store the event for later use
             window.deferredPrompt = e;
-            console.log('Install prompt available');
+            console.log("Install prompt available");
           });
 
           // Listen for successful installation
-          window.addEventListener('appinstalled', () => {
+          window.addEventListener("appinstalled", () => {
             // Clear the deferredPrompt
             window.deferredPrompt = null;
-            console.log('PWA installed successfully');
+            console.log("PWA installed successfully");
           });
         })
-        .catch(error => {
-          console.error('Service Worker registration failed:', error);
+        .catch((error) => {
+          console.error("Service Worker registration failed:", error);
         });
     }
   }, []);

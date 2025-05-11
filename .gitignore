@@ -10,6 +10,12 @@
 # production
 /build
 
+# Build outputs that shouldn't be in repo
+/*.html
+/*.txt
+/*.webmanifest
+/_next/
+
 # debug
 npm-debug.log*
 yarn-debug.log*

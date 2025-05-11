@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main
+      - gh-pages
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -27,7 +27,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: "18"
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
@@ -46,6 +46,15 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
+
+      - name: Clean build outputs
+        run: |
+          rm -rf .next
+          rm -rf out
+          rm -rf _next
+          rm -f *.html
+          rm -f *.txt
+          rm -f *.webmanifest
 
       - name: Install dependencies
         run: pnpm install
