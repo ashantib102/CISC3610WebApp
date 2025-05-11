@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { isPWAInstalled } from "../pwa";
 import {
   Card,
   CardContent,
@@ -34,23 +35,31 @@ export default function LearnPage() {
   const [audioError, setAudioError] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [isInstalled, setIsInstalled] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const models: LLMModel[] = llmData;
 
   useEffect(() => {
+    // Check if app is already installed
+    setIsInstalled(isPWAInstalled());
+
     const handleBeforeInstallPrompt = (e: any) => {
       e.preventDefault();
       setDeferredPrompt(e);
     };
 
+    const handleAppInstalled = () => {
+      setIsInstalled(true);
+      setDeferredPrompt(null);
+    };
+
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+    window.addEventListener("appinstalled", handleAppInstalled);
 
     return () => {
-      window.removeEventListener(
-        "beforeinstallprompt",
-        handleBeforeInstallPrompt
-      );
+      window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+      window.removeEventListener("appinstalled", handleAppInstalled);
     };
   }, []);
 
@@ -60,11 +69,15 @@ export default function LearnPage() {
       deferredPrompt.userChoice.then((choiceResult: any) => {
         if (choiceResult.outcome === "accepted") {
           console.log("User accepted the install prompt");
-        } else {
-          console.log("User dismissed the install prompt");
+          setIsInstalled(true);
         }
         setDeferredPrompt(null);
       });
+    } else if (!isInstalled) {
+      // Show instructions for manual installation
+      alert(
+        "To install the app:\n1. Open your browser's menu\n2. Look for 'Install App' or 'Add to Home Screen'\n3. Follow the prompts to install"
+      );
     }
   };
 
@@ -314,10 +327,13 @@ export default function LearnPage() {
               </Link>
               <Link
                 href="#"
-                onClick={handleInstallClick}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleInstallClick();
+                }}
                 className="text-white hover:text-blue-200"
               >
-                Download
+                {isInstalled ? "Installed" : "Download"}
               </Link>
             </nav>
           </div>

@@ -1,61 +1,53 @@
 "use client";
 
-// Extend the Window interface to include the beforeinstallprompt event
-declare global {
-  interface WindowEventMap {
-    beforeinstallprompt: Event & {
-      prompt: () => void;
-      userChoice: Promise<{ outcome: string }>;
-    };
-  }
-}
-
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Laptop, Database } from "lucide-react";
+import { isPWAInstalled } from "../pwa";
 
 export default function AboutPage() {
-  const [deferredPrompt, setDeferredPrompt] = useState<
-    | (Event & {
-        prompt: () => void;
-        userChoice: Promise<{ outcome: string }>;
-      })
-    | null
-  >(null);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [isInstalled, setIsInstalled] = useState(false);
 
   useEffect(() => {
-    const handleBeforeInstallPrompt = (
-      e: Event & {
-        prompt: () => void;
-        userChoice: Promise<{ outcome: string }>;
-      }
-    ) => {
+    // Check if app is already installed
+    setIsInstalled(isPWAInstalled());
+
+    const handleBeforeInstallPrompt = (e: any) => {
       e.preventDefault();
       setDeferredPrompt(e);
     };
 
+    const handleAppInstalled = () => {
+      setIsInstalled(true);
+      setDeferredPrompt(null);
+    };
+
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+    window.addEventListener("appinstalled", handleAppInstalled);
 
     return () => {
-      window.removeEventListener(
-        "beforeinstallprompt",
-        handleBeforeInstallPrompt
-      );
+      window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+      window.removeEventListener("appinstalled", handleAppInstalled);
     };
   }, []);
 
   const handleInstallClick = () => {
     if (deferredPrompt) {
       deferredPrompt.prompt();
-      deferredPrompt.userChoice.then((choiceResult) => {
+      deferredPrompt.userChoice.then((choiceResult: any) => {
         if (choiceResult.outcome === "accepted") {
           console.log("User accepted the install prompt");
-        } else {
-          console.log("User dismissed the install prompt");
+          setIsInstalled(true);
         }
         setDeferredPrompt(null);
       });
+    } else if (!isInstalled) {
+      // Show instructions for manual installation
+      alert(
+        "To install the app:\n1. Open your browser's menu\n2. Look for 'Install App' or 'Add to Home Screen'\n3. Follow the prompts to install"
+      );
     }
   };
 
@@ -86,10 +78,13 @@ export default function AboutPage() {
               </Link>
               <Link
                 href="#"
-                onClick={handleInstallClick}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleInstallClick();
+                }}
                 className="text-white hover:text-blue-200"
               >
-                Download
+                {isInstalled ? "Installed" : "Download"}
               </Link>
             </nav>
           </div>
@@ -268,10 +263,13 @@ export default function AboutPage() {
               </Link>
               <Link
                 href="#"
-                onClick={handleInstallClick}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleInstallClick();
+                }}
                 className="hover:text-blue-300"
               >
-                Download
+                {isInstalled ? "Installed" : "Download"}
               </Link>
             </div>
           </div>
