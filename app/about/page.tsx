@@ -28,7 +28,10 @@ export default function AboutPage() {
     window.addEventListener("appinstalled", handleAppInstalled);
 
     return () => {
-      window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt
+      );
       window.removeEventListener("appinstalled", handleAppInstalled);
     };
   }, []);
@@ -77,14 +80,10 @@ export default function AboutPage() {
                 About
               </Link>
               <Link
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleInstallClick();
-                }}
+                href="/promo"
                 className="text-white hover:text-blue-200"
               >
-                {isInstalled ? "Installed" : "Download"}
+                Download
               </Link>
             </nav>
           </div>
@@ -261,15 +260,8 @@ export default function AboutPage() {
               <Link href="/about" className="hover:text-blue-300">
                 About
               </Link>
-              <Link
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleInstallClick();
-                }}
-                className="hover:text-blue-300"
-              >
-                {isInstalled ? "Installed" : "Download"}
+              <Link href="/promo" className="hover:text-blue-300">
+                Download
               </Link>
             </div>
           </div>

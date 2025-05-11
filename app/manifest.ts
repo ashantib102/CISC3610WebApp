@@ -20,20 +20,20 @@ export default function manifest(): MetadataRoute.Manifest {
         src: "/llm-explorer-logo.jpeg",
         sizes: "512x512",
         type: "image/jpeg",
-        purpose: "maskable"
+        purpose: "maskable",
       },
       {
         src: "/icon-192x192.png",
         sizes: "192x192",
         type: "image/png",
-        purpose: "any"
+        purpose: "any",
       },
       {
         src: "/icon-512x512.png",
         sizes: "512x512",
         type: "image/png",
-        purpose: "any"
-      }
-    ]
+        purpose: "any",
+      },
+    ],
   };
 }

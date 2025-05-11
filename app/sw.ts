@@ -14,9 +14,19 @@ const RESOURCES_TO_CACHE = [
   "/promo",
   "/icon-192x192.png",
   "/icon-512x512.png",
-  "/manifest.json",
+  "/manifest.webmanifest",
   "/data/llm-data.json",
-  // Add other assets that should be available offline
+  "/llm-explorer-logo.jpeg",
+  "/chatgpt-logo.png",
+  "/claude-logo.webp",
+  "/gemini-logo.webp",
+  "/v0-logo.svg",
+  "/copilot-logo.jpeg",
+  "/deepseek-logo.webp",
+  "/cursor-logo.png",
+  "/llm-explorer-home.png",
+  "/llm-explorer-mobile-app.png",
+  "/llm-explorer-details.png"
 ];
 
 // Define custom types for service worker events

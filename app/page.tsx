@@ -1,6 +1,6 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { ArrowRight, Download, BookOpen } from "lucide-react"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { ArrowRight, Download, BookOpen } from "lucide-react";
 
 export default function Home() {
   return (
@@ -8,10 +8,16 @@ export default function Home() {
       <header className="bg-gradient-to-r from-blue-600 to-indigo-700 py-6">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
-            <div className="flex items-center">
-              <img src="/llm-explorer-logo.jpeg" alt="LLM Explorer Logo" className="h-12 w-auto mr-3" />
-              <h1 className="text-2xl font-bold text-white">LLM Explorer</h1>
-            </div>
+            <Link href="/">
+              <div className="flex items-center">
+                <img
+                  src="/llm-explorer-logo.jpeg"
+                  alt="LLM Explorer Logo"
+                  className="h-12 w-auto mr-3"
+                />
+                <h1 className="text-2xl font-bold text-white">LLM Explorer</h1>
+              </div>
+            </Link>
             <nav className="hidden md:flex space-x-4">
               <Link href="/" className="text-white hover:text-blue-200">
                 Home
@@ -26,9 +32,6 @@ export default function Home() {
                 Download
               </Link>
             </nav>
-            <Button variant="outline" className="bg-white text-blue-700 hidden md:flex">
-              <Download className="mr-2 h-4 w-4" /> Install App
-            </Button>
           </div>
         </div>
       </header>
@@ -36,10 +39,13 @@ export default function Home() {
       <main className="flex-grow">
         <section className="bg-gradient-to-b from-blue-700 to-blue-600 text-white py-20">
           <div className="container mx-auto px-4 text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">Explore the World of LLMs</h1>
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+              Explore the World of LLMs
+            </h1>
             <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-              Discover the capabilities, use cases, and differences between today's leading Large Language Models in
-              this interactive learning app.
+              Discover the capabilities, use cases, and differences between
+              today's leading Large Language Models in this interactive learning
+              app.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link href="/learn">
@@ -48,7 +54,11 @@ export default function Home() {
                 </Button>
               </Link>
               <Link href="/promo">
-                <Button size="lg" variant="outline" className="bg-white text-blue-700 w-full sm:w-auto">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="bg-white text-blue-700 w-full sm:w-auto"
+                >
                   Download App <Download className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
@@ -58,16 +68,22 @@ export default function Home() {
 
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12">Featured LLM Models</h2>
+            <h2 className="text-3xl font-bold text-center mb-12">
+              Featured LLM Models
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {["ChatGPT", "Claude", "Gemini"].map((model) => (
-                <div key={model} className="bg-white rounded-lg shadow-md overflow-hidden">
+                <div
+                  key={model}
+                  className="bg-white rounded-lg shadow-md overflow-hidden"
+                >
                   <div className="h-48 bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center">
                     <h3 className="text-2xl font-bold text-white">{model}</h3>
                   </div>
                   <div className="p-6">
                     <p className="text-gray-600 mb-4">
-                      Learn about the capabilities, strengths, and use cases of {model}.
+                      Learn about the capabilities, strengths, and use cases of{" "}
+                      {model}.
                     </p>
                     <Link href={`/learn?model=${model.toLowerCase()}`}>
                       <Button variant="outline" className="w-full">
@@ -90,7 +106,10 @@ export default function Home() {
                   <BookOpen className="h-8 w-8 text-blue-600" />
                 </div>
                 <h3 className="text-xl font-semibold mb-3">Stay Updated</h3>
-                <p className="text-gray-600">Keep up with the rapidly evolving field of AI and language models.</p>
+                <p className="text-gray-600">
+                  Keep up with the rapidly evolving field of AI and language
+                  models.
+                </p>
               </div>
               <div className="p-6">
                 <div className="bg-blue-100 rounded-full p-4 inline-block mb-4">
@@ -109,9 +128,12 @@ export default function Home() {
                     />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold mb-3">Make Informed Choices</h3>
+                <h3 className="text-xl font-semibold mb-3">
+                  Make Informed Choices
+                </h3>
                 <p className="text-gray-600">
-                  Understand which LLM is best suited for specific tasks and applications.
+                  Understand which LLM is best suited for specific tasks and
+                  applications.
                 </p>
               </div>
               <div className="p-6">
@@ -132,7 +154,10 @@ export default function Home() {
                   </svg>
                 </div>
                 <h3 className="text-xl font-semibold mb-3">Unlock Potential</h3>
-                <p className="text-gray-600">Discover new possibilities and applications for your work or projects.</p>
+                <p className="text-gray-600">
+                  Discover new possibilities and applications for your work or
+                  projects.
+                </p>
               </div>
             </div>
           </div>
@@ -163,5 +188,5 @@ export default function Home() {
         </div>
       </footer>
     </div>
-  )
+  );
 }
